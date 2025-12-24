@@ -1,0 +1,15 @@
+base_url: "http://books.toscrape.com/"
+rate_limit_delay: 1.0
+max_retries: 3
+output_format: "csv"
+output_file: "books_data"
+# Pagination strategy: "next_button" or "pattern"
+pagination:
+  strategy: "next_button"
+  next_button_selector: "li.next > a"
+  max_pages: 5
+selectors:
+  item_container: "article.product_pod"
+  fields:
+    title: "h3 > a::attr(title)"
+    price: ".price_color::text"
