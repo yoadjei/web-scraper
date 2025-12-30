@@ -1,0 +1,40 @@
+# WebScraper Configuration
+# Example for: Quotes to Scrape (JavaScript-rendered)
+
+scraper:
+  base_url: "http://quotes.toscrape.com/js/"
+  concurrency: 3
+  rate_limit: 2.0
+  max_retries: 3
+  renderer: "dynamic"  # Required for JavaScript content
+
+  session:
+    rotate_user_agent: true
+    proxies: []
+    timeout: 60.0  # Longer timeout for JS rendering
+
+  selectors:
+    item_container: ".quote"
+    fields:
+      text:
+        selector: ".text"
+        type: "text"
+      author:
+        selector: ".author"
+        type: "text"
+      tags:
+        selector: ".tags"
+        type: "text"
+
+  pagination:
+    strategy: "next_button"
+    selector: "li.next > a"
+    max_pages: 3
+
+  output:
+    format: "json"
+    path: "./output/quotes_data"
+
+  resume:
+    enabled: true
+    checkpoint_dir: "./.scraper_state"

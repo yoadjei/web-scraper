@@ -1,0 +1,41 @@
+# WebScraper Configuration
+# Example for: http://books.toscrape.com/
+
+scraper:
+  base_url: "http://books.toscrape.com/"
+  concurrency: 5
+  rate_limit: 1.0
+  max_retries: 3
+  renderer: "static"  # Use "dynamic" for JavaScript-rendered pages
+
+  session:
+    rotate_user_agent: true
+    proxies: []  # Add proxy URLs here for rotation
+    timeout: 30.0
+
+  selectors:
+    item_container: "article.product_pod"
+    fields:
+      title:
+        selector: "h3 > a"
+        attribute: "title"
+        type: "attribute"
+      price:
+        selector: ".price_color"
+        type: "text"
+      availability:
+        selector: ".instock.availability"
+        type: "text"
+
+  pagination:
+    strategy: "next_button"
+    selector: "li.next > a"
+    max_pages: 5
+
+  output:
+    format: "csv"
+    path: "./output/books_data"
+
+  resume:
+    enabled: true
+    checkpoint_dir: "./.scraper_state"
